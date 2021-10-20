@@ -5,7 +5,7 @@ var fs = require("fs");
 var BSON = require("bson");
 var cors = require('cors');
 var earcut = require('earcut');
-var opn = require('opn');
+// var opn = require('opn');
 var cmd     = require('node-command-line'),
     Promise = require('bluebird');
 var os = require('os');
@@ -22,7 +22,7 @@ app.use(bodyParser.text({limit: '1gb'}));
 var server = app.listen(5757, function() {
 
   console.log('IndoorGML-Editor App listening on port 5757...');
-  opn('http://127.0.0.1:5757/', {app: 'chrome'});
+  // opn('http://127.0.0.1:5757/', {app: 'chrome'});
 
   //console.log(process.env)
   Promise.coroutine(function *() {
