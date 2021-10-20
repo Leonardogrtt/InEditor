@@ -654,13 +654,13 @@
     $('.ui.dropdown').dropdown();
 
     function handleProjectImportFileChange(e) {
-      $('#project-import-file-label').html(event.target.files[0].name);
+      $('#project-import-file-label').html(e.target.files[0].name);
     }
     function handleSettingCodeModalClick(e) {
       $('#setting-code-modal').modal('hide');
     }
     function handleSettingCodeUploadFileLabelChange(e) {
-      $('#setting-code-upload-file-label').html(event.target.files[0].name);
+      $('#setting-code-upload-file-label').html(e.target.files[0].name);
     }
   </script>
 
