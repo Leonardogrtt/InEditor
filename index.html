@@ -459,7 +459,7 @@
             <h6>File</h6>
             <div class="custom-file">
               <input type="file" class="custom-file-input" id="project-import-file" accept=".gml, .geojson"
-                onChange={$( '#project-import-file-label' ).html(event.target.files[0].name);}>
+                onChange={handleProjectImportFileChange}>
               <label class="custom-file-label" for="customFile" id="project-import-file-label"></label>
             </div><br /><br />
 
@@ -583,7 +583,7 @@
 
   <div class="ui longer modal" id="setting-code-modal">
     <div class="header">
-      <i class="close icon" onClick={$('#setting-code-modal').modal('hide')}></i>
+      <i class="close icon" onClick={handleSettingCodeModalClick}></i>
       Code List
     </div>
 
@@ -630,7 +630,7 @@
         <div class="ten wide column middle aligned">
           <div>
             <input type="file" class="custom-file-input" id="setting-code-upload-file" accept=".csv, .json"
-              onChange={$('#setting-code-upload-file-label').html(event.target.files[0].name);}>
+              onChange={handleSettingCodeUploadFileLabelChange}>
             <label class="custom-file-label" for="customFile" style="top:1rem"
               id="setting-code-upload-file-label"></label>
           </div>
@@ -652,6 +652,16 @@
 
   <script>
     $('.ui.dropdown').dropdown();
+
+    function handleProjectImportFileChange(e) {
+      $('#project-import-file-label').html(event.target.files[0].name);
+    }
+    function handleSettingCodeModalClick(e) {
+      $('#setting-code-modal').modal('hide');
+    }
+    function handleSettingCodeUploadFileLabelChange(e) {
+      $('#setting-code-upload-file-label').html(event.target.files[0].name);
+    }
   </script>
 
   <script data-main="js/main" src="lib/require.js"></script>
