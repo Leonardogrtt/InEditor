@@ -77,12 +77,23 @@ define(function(require) {
       }
     }
 
-    xhr.open("POST", "http://127.0.0.1:5757/save-project", true);
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhr.send(JSON.stringify({
-      doc: doc,
-      path: filename
-    }));
+    console.log('@save-project');
+    console.log('sending project json to host: ', doc);
+    window.parent.contentWindow.postMessage(
+      {
+        for: 'host',
+        sender: 'in-editor',
+        project: doc
+      },
+      'http://localhost:4200'
+    );
+
+    // xhr.open("POST", "http://127.0.0.1:5757/save-project", true);
+    // xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    // xhr.send(JSON.stringify({
+    //   doc: doc,
+    //   path: filename
+    // }));
 
   }
 
