@@ -61,7 +61,7 @@ define(function (require) {
         return {
           geometry: {
             type: 'Polygon',
-            coordinates: [cell.points.map(p => [p.point.x, height - p.point.y])]
+            coordinates: [cell.points.map(p => [p.point.x, Number(height - p.point.y)])]
           },
           properties: { name },
         };
@@ -75,7 +75,7 @@ define(function (require) {
         return {
           geometry: {
             type: 'Point',
-            coordinates: [state.point.point.x, height - state.point.point.y]
+            coordinates: [state.point.point.x, Number(height - state.point.point.y)]
           },
           properties: { name },
         }
@@ -90,7 +90,7 @@ define(function (require) {
           geometry: {
             type: 'LineString',
             coordinates: [
-              transition.points.map(p => [p.point.x, height - p.point.y])
+              transition.points.map(p => [p.point.x, Number(height - p.point.y)])
             ]
           },
           properties: { name },
@@ -100,9 +100,10 @@ define(function (require) {
 
     const projectGeoJSON = {
       canvas: { height, width },
-      geo: { polygons, points, lineStrings }
+      geo: { polygons, points, lineStrings },
+      conditions: { savePath: undefined, saveWithTimeStamp: undefined }
     };
-    
+
     /* send project GeoJSON to iframe host */
     window.parent.postMessage(
       {
@@ -112,8 +113,9 @@ define(function (require) {
       },
       'http://localhost:4200'
     );
-    
+
     var doc = projectGeoJSON;
+
     // // Serialize document
     // var id = propertyContainer.projectProperty.id;
     // var doc = {};
