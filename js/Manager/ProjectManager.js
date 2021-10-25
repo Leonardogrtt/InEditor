@@ -2,7 +2,7 @@
  * @author suheeeee<lalune1120@hotmail.com>
  */
 
-define(function(require) {
+define(function (require) {
   'use strict';
 
   /**
@@ -18,7 +18,7 @@ define(function(require) {
 
   ProjectManager.prototype = Object.create(require('Subscriber').prototype);
 
-  ProjectManager.prototype.init = function() {
+  ProjectManager.prototype.init = function () {
 
     this.name = 'ProjectManager';
 
@@ -33,7 +33,7 @@ define(function(require) {
   /**
    * @memberof ProjectManager
    */
-  ProjectManager.prototype.saveProject = function() {
+  ProjectManager.prototype.saveProject = function () {
     var canvasContainer = require('Storage').getInstance().getCanvasContainer();
     var geometryContainer = require('Storage').getInstance().getGeometryContainer();
     var dotPoolContainer = require('Storage').getInstance().getDotPoolContainer();
@@ -58,35 +58,33 @@ define(function(require) {
       };
 
     }
-
-    doc['conditions'] = require('Conditions').getInstance();
-    doc['codeList'] = require('Property').CODE_LIST.getInstance().getList();
-
-    var filename = doc.conditions.savePath + '/' + require('Conditions').getInstance().saveName
-    filename += doc.conditions.saveWithTimeStamp ? '-' + new Date().getTime() : '';
-    filename += '.json';
-
-
-    // send json data to viewer
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status == 200) {
-        require('Popup')('success', 'Project saved successfully', filename);
-      } else if (xhr.status == 500) {
-        require('Popup')('error', xhr.statusText, xhr.responseText);
-      }
-    }
-
-    console.log('@save-project');
-    console.log('sending project json to host: ', doc);
-    window.parent.contentWindow.postMessage(
+ 
+    (window.parent.contentWindow || window.parent).postMessage(
       {
         for: 'host',
         sender: 'in-editor',
-        project: doc
+        type: 'project',
+        project: toGeoJSON(doc),
       },
       'http://localhost:4200'
     );
+
+    // doc['conditions'] = require('Conditions').getInstance();
+    // doc['codeList'] = require('Property').CODE_LIST.getInstance().getList();
+
+    // var filename = doc.conditions.savePath + '/' + require('Conditions').getInstance().saveName
+    // filename += doc.conditions.saveWithTimeStamp ? '-' + new Date().getTime() : '';
+    // filename += '.json';
+
+    // // send json data to viewer
+    // var xhr = new XMLHttpRequest();
+    // xhr.onreadystatechange = function () {
+    //   if (xhr.readyState === 4 && xhr.status == 200) {
+    //     require('Popup')('success', 'Project saved successfully', filename);
+    //   } else if (xhr.status == 500) {
+    //     require('Popup')('error', xhr.statusText, xhr.responseText);
+    //   }
+    // }
 
     // xhr.open("POST", "http://127.0.0.1:5757/save-project", true);
     // xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -100,7 +98,7 @@ define(function(require) {
   /**
    * @memberof ProjectManager
    */
-  ProjectManager.prototype.loadProject = function(reqObj) {
+  ProjectManager.prototype.loadProject = function (reqObj) {
 
     $('#loading-modal')[0].children[0].innerHTML = "Load Project";
     $('#loading-modal').modal("show");
@@ -108,12 +106,12 @@ define(function(require) {
 
     var reader = new FileReader();
     reader.readAsBinaryString(reqObj.file);
-    reader.onload = function(e) {
+    reader.onload = function (e) {
 
-      if(reqObj.file.name.lastIndexOf('.bson') == reqObj.file.name.length-5){
+      if (reqObj.file.name.lastIndexOf('.bson') == reqObj.file.name.length - 5) {
         // if file type is bson
         var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
 
           if (xhr.readyState == 4 && xhr.status == 200) {
             var obj = JSON.parse(xhr.responseText);
@@ -133,11 +131,11 @@ define(function(require) {
     }
   }
 
-  ProjectManager.prototype.makeObjFromJson = function(obj){
+  ProjectManager.prototype.makeObjFromJson = function (obj) {
     require('Conditions').getInstance().load(obj.conditions);
     delete obj.conditions;
 
-    if(obj.codeList != undefined){
+    if (obj.codeList != undefined) {
       require('Property').CODE_LIST.getInstance().load(obj.codeList);
       delete obj.codeList;
     }
@@ -150,7 +148,7 @@ define(function(require) {
 
     propertyContainer.load(loadData.propertyContainer);
 
-    if(loadData.dotPoolContainer == undefined && loadData.dotFoolContainer != undefined){
+    if (loadData.dotPoolContainer == undefined && loadData.dotFoolContainer != undefined) {
       loadData['dotPoolContainer'] = JSON.parse(JSON.stringify(loadData['dotFoolContainer']));
       loadData.dotPoolContainer['dotPool'] = JSON.parse(JSON.stringify(loadData.dotPoolContainer.dotFool))
     }
@@ -171,10 +169,10 @@ define(function(require) {
       manager.loadStage(
         key,
         newFloorProperty, {
-          width: loadData.canvasContainer[key].width,
-          height: loadData.canvasContainer[key].height,
-          dataURL: loadData.canvasContainer[key].floorplanDataURL
-        }
+        width: loadData.canvasContainer[key].width,
+        height: loadData.canvasContainer[key].height,
+        dataURL: loadData.canvasContainer[key].floorplanDataURL
+      }
 
       );
     }
@@ -187,7 +185,7 @@ define(function(require) {
     require('UI').getInstance().treeView.refresh(storage.getPropertyContainer());
   }
 
-  ProjectManager.prototype.loadStage = function(key, newFloorProperty, canvasProperty) {
+  ProjectManager.prototype.loadStage = function (key, newFloorProperty, canvasProperty) {
 
 
     require('UI').getInstance().workspace.addNewWorkspace(key, newFloorProperty.name);
@@ -221,17 +219,17 @@ define(function(require) {
   /**
    * @memberof ProjectManager
    */
-  ProjectManager.prototype.importGML = function(reqObj) {
+  ProjectManager.prototype.importGML = function (reqObj) {
     $('#loading-modal')[0].children[0].innerHTML = "Import IndoorGML file";
     $('#loading-modal').modal("show");
 
     var reader = new FileReader();
     reader.readAsText(reqObj.file);
 
-    reader.onload = function() {
+    reader.onload = function () {
 
       var xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function() {
+      xhr.onreadystatechange = function () {
 
         if (xhr.readyState == 4 && xhr.status == 200) {
           var manager = require('Broker').getInstance().getManager('importgml', 'ProjectManager');
@@ -252,10 +250,10 @@ define(function(require) {
   /**
    * @memberof ProjectManager
    */
-  ProjectManager.prototype.xmlToJson = function(path) {
+  ProjectManager.prototype.xmlToJson = function (path) {
     var xhr = new XMLHttpRequest();
     var result;
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
 
       if (xhr.readyState == 4 && xhr.status == 200) {
         result = xhr.response;
@@ -269,7 +267,7 @@ define(function(require) {
     return result;
   }
 
-  ProjectManager.prototype.makeObj = function(data) {
+  ProjectManager.prototype.makeObj = function (data) {
     require('Storage').getInstance().clear();
     require('UI').getInstance().workspace.destroy();
     require('UI').getInstance().treeView.init();
@@ -320,9 +318,9 @@ define(function(require) {
 
     var transResult = require("../Utils/GMLHelper.js").transCoor(
       data, {
-        height: document.getElementById(floorId).clientHeight,
-        width: document.getElementById(floorId).clientWidth
-      }
+      height: document.getElementById(floorId).clientHeight,
+      width: document.getElementById(floorId).clientWidth
+    }
     );
 
     var canvasContainer = require('Storage').getInstance().getCanvasContainer();
@@ -357,11 +355,11 @@ define(function(require) {
   /**
    * @memberof ProjectManager
    */
-  ProjectManager.prototype.importFile = function(reqObj) {
+  ProjectManager.prototype.importFile = function (reqObj) {
 
     var reader = new FileReader();
     reader.readAsText(reqObj.file);
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       var geojson = JSON.parse(e.target.result);
 
 
@@ -384,38 +382,38 @@ define(function(require) {
     }
   }
 
-  ProjectManager.prototype.updateConditions = function(reqObj) {
+  ProjectManager.prototype.updateConditions = function (reqObj) {
     var conditions = require('Conditions').getInstance();
 
-    if(conditions.pre_cell != reqObj.prefix.cell){
+    if (conditions.pre_cell != reqObj.prefix.cell) {
       conditions.LAST_CELL_ID_NUM = 0;
       conditions.pre_cell = reqObj.prefix.cell;
     }
 
-    if(conditions.pre_cellBoundary != reqObj.prefix.cellboundary){
+    if (conditions.pre_cellBoundary != reqObj.prefix.cellboundary) {
       conditions.LAST_CELLBOUNDARY_ID_NUM = 0;
       conditions.pre_cellBoundary = reqObj.prefix.cellboundary;
     }
 
-    if(conditions.pre_state != reqObj.prefix.state){
+    if (conditions.pre_state != reqObj.prefix.state) {
       conditions.LAST_STATE_ID_NUM = 0;
       conditions.pre_state = reqObj.prefix.state;
     }
 
-    if(conditions.pre_transition != reqObj.prefix.trnsition){
+    if (conditions.pre_transition != reqObj.prefix.trnsition) {
       conditions.LAST_TRANSITION_ID_NUM = 0;
       conditions.pre_transition = reqObj.prefix.trnsition;
     }
 
     var ratio = reqObj.canvas.aspectRatio.split(':');
 
-    if(ratio.length != 2){
+    if (ratio.length != 2) {
       require('Popup')('error', 'Invalid Input', reqObj.canvas.aspectRatio);
     }
-    else{
+    else {
       conditions.aspectRatio = {
-        x: ratio[0]*1,
-        y: ratio[1]*1
+        x: ratio[0] * 1,
+        y: ratio[1] * 1
       };
     }
 
