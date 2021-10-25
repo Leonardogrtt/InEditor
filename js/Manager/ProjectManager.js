@@ -40,7 +40,7 @@ define(function (require) {
     var propertyContainer = require('Storage').getInstance().getPropertyContainer();
 
     /* build project GeoJSON */
-    const { height, width } = canvasContainer["F1"];
+    const { height, width } = canvasContainer.stages.F1;
     const cells = geometryContainer.cellGeometry;
     const states = geometryContainer.stateGeometry;
     const transitions = geometryContainer.transitionGeometry;
