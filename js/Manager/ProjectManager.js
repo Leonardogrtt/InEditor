@@ -40,6 +40,8 @@ define(function (require) {
     var propertyContainer = require('Storage').getInstance().getPropertyContainer();
 
     /* build project GeoJSON */
+    const projectGeoJSON = {};
+
     const width = canvasContainer.stages["F1"].stage.getAttr('width');
     const height = canvasContainer.stages["F1"].stage.getAttr('height');
     const floorPlanDataURL = canvasContainer.stages["F1"].backgroundLayer.floorplanDataURL[0];
@@ -55,6 +57,19 @@ define(function (require) {
     const polygons = getPolygons(cells, cellProps, height);
     const points = getPoints(states, stateProps, height);
     const lineStrings = getLineStrings(transitions, transitionProps, height);
+
+    projectGeoJSON.canvas = { height, width, floorPlanDataURL };
+    projectGeoJSON.geo = { polygons, points, lineStrings }
+
+    /* send project GeoJSON to iframe host */
+    window.parent.postMessage(
+      {
+        sender: 'in-editor',
+        type: 'project',
+        project: projectGeoJSON,
+      },
+      'http://localhost:4200'
+    );
 
     function getPolygons(cells, cellProps, height) {
       if (cells.length < 1) return [];
@@ -101,23 +116,6 @@ define(function (require) {
       }
     }
 
-    const projectGeoJSON = {
-      canvas: { height, width, floorPlanDataURL },
-      geo: { polygons, points, lineStrings }
-    };
-
-    /* send project GeoJSON to iframe host */
-    window.parent.postMessage(
-      {
-        sender: 'in-editor',
-        type: 'project',
-        project: projectGeoJSON,
-      },
-      'http://localhost:4200'
-    );
-
-    var doc = projectGeoJSON;
-
     // // Serialize document
     // var id = propertyContainer.projectProperty.id;
     // var doc = {};
@@ -145,28 +143,31 @@ define(function (require) {
     // filename += doc.conditions.saveWithTimeStamp ? '-' + new Date().getTime() : '';
     // filename += '.json';
 
-    var conditions = require('Conditions').getInstance();
-    var filename = conditions.savePath + '/' + conditions.saveName;
-    filename += conditions.saveWithTimeStamp ? '-' + new Date().getTime() : '';
-    filename += '.json';
 
-    // send json data to viewer
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status == 200) {
-        require('Popup')('success', 'Project saved successfully', filename);
-      } else if (xhr.status == 500) {
-        require('Popup')('error', xhr.statusText, xhr.responseText);
-      }
-    }
+    /* save doc to filesystem via backend api */
+    var doc = projectGeoJSON;
 
-    xhr.open("POST", "http://127.0.0.1:5757/save-project", true);
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhr.send(JSON.stringify({
-      doc: doc,
-      path: filename
-    }));
+    // var conditions = require('Conditions').getInstance();
+    // var filename = conditions.savePath + '/' + conditions.saveName;
+    // filename += conditions.saveWithTimeStamp ? '-' + new Date().getTime() : '';
+    // filename += '.json';
 
+    // // send json data to viewer
+    // var xhr = new XMLHttpRequest();
+    // xhr.onreadystatechange = function () {
+    //   if (xhr.readyState === 4 && xhr.status == 200) {
+    //     require('Popup')('success', 'Project saved successfully', filename);
+    //   } else if (xhr.status == 500) {
+    //     require('Popup')('error', xhr.statusText, xhr.responseText);
+    //   }
+    // }
+
+    // xhr.open("POST", "http://127.0.0.1:5757/save-project", true);
+    // xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    // xhr.send(JSON.stringify({
+    //   doc: doc,
+    //   path: filename
+    // }));
   }
 
   /**
