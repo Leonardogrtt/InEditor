@@ -68,7 +68,7 @@ define(function (require) {
       }
     }
     function getPoints(states, stateProps, height) {
-      if (points.length < 1) return [];
+      if (states.length < 1) return [];
       return states.map((s, idx) => getPoint(s, stateProps[idx].name, height));
 
       function getPoint(state, name, height) {
