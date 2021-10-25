@@ -100,8 +100,7 @@ define(function (require) {
 
     const projectGeoJSON = {
       canvas: { height, width },
-      geo: { polygons, points, lineStrings },
-      conditions: { savePath: undefined, saveWithTimeStamp: undefined }
+      geo: { polygons, points, lineStrings }
     };
 
     /* send project GeoJSON to iframe host */
@@ -139,9 +138,14 @@ define(function (require) {
     // doc['conditions'] = require('Conditions').getInstance();
     // doc['codeList'] = require('Property').CODE_LIST.getInstance().getList();
 
-    var filename = doc.conditions.savePath + '/' + require('Conditions').getInstance().saveName
-    filename += doc.conditions.saveWithTimeStamp ? '-' + new Date().getTime() : '';
-    filename += '.json';
+    // var filename = doc.conditions.savePath + '/' + require('Conditions').getInstance().saveName
+    // filename += doc.conditions.saveWithTimeStamp ? '-' + new Date().getTime() : '';
+    // filename += '.json';
+
+    var conditions = require('Conditions').getInstance();
+    var filename = conditions.savePath + '/' + conditions.saveName;
+    filename += conditions.saveWithTimeStamp ? '-' + new Date().getTime() : '';
+    filename += '.json'; 
 
     // send json data to viewer
     var xhr = new XMLHttpRequest();
