@@ -40,7 +40,10 @@ define(function (require) {
     var propertyContainer = require('Storage').getInstance().getPropertyContainer();
 
     /* build project GeoJSON */
-    const { height, width } = canvasContainer.stages.F1;
+    const width = canvasContainer.stages["F1"].stage.getAttr('width');
+    const height = canvasContainer.stages["F1"].stage.getAttr('height');
+    const floorplanDataURL = canvasContainer.stages["F1"].backgroundLayer.floorplanDataURL[0];
+
     const cells = geometryContainer.cellGeometry;
     const states = geometryContainer.stateGeometry;
     const transitions = geometryContainer.transitionGeometry;
@@ -99,7 +102,7 @@ define(function (require) {
     }
 
     const projectGeoJSON = {
-      canvas: { height, width },
+      canvas: { height, width, floorPlanDataURL },
       geo: { polygons, points, lineStrings }
     };
 
@@ -145,7 +148,7 @@ define(function (require) {
     var conditions = require('Conditions').getInstance();
     var filename = conditions.savePath + '/' + conditions.saveName;
     filename += conditions.saveWithTimeStamp ? '-' + new Date().getTime() : '';
-    filename += '.json'; 
+    filename += '.json';
 
     // send json data to viewer
     var xhr = new XMLHttpRequest();
