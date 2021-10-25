@@ -107,9 +107,7 @@ define(function (require) {
         return {
           geometry: {
             type: 'LineString',
-            coordinates: [
-              transition.points.map(p => [p.point.x, Number(height - p.point.y)])
-            ]
+            coordinates: [transition.points.map(p => [p.point.x, Number(height - p.point.y)])]
           },
           properties: { name },
         }
