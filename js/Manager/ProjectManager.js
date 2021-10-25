@@ -42,7 +42,7 @@ define(function (require) {
     /* build project GeoJSON */
     const width = canvasContainer.stages["F1"].stage.getAttr('width');
     const height = canvasContainer.stages["F1"].stage.getAttr('height');
-    const floorplanDataURL = canvasContainer.stages["F1"].backgroundLayer.floorplanDataURL[0];
+    const floorPlanDataURL = canvasContainer.stages["F1"].backgroundLayer.floorplanDataURL[0];
 
     const cells = geometryContainer.cellGeometry;
     const states = geometryContainer.stateGeometry;
