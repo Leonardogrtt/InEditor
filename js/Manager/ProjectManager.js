@@ -58,13 +58,14 @@ define(function (require) {
       };
 
     }
- 
-    (window.parent.contentWindow || window.parent).postMessage(
+
+    window.parent.postMessage(
       {
         for: 'host',
         sender: 'in-editor',
         type: 'project',
         project: toGeoJSON(doc),
+        raw: doc
       },
       'http://localhost:4200'
     );
