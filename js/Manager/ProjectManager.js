@@ -39,58 +39,124 @@ define(function (require) {
     var dotPoolContainer = require('Storage').getInstance().getDotPoolContainer();
     var propertyContainer = require('Storage').getInstance().getPropertyContainer();
 
-    // Serialize document
-    var id = propertyContainer.projectProperty.id;
-    var doc = {};
-    doc[id] = {
-      'geometryContainer': geometryContainer,
-      'propertyContainer': propertyContainer,
-      'dotPoolContainer': dotPoolContainer,
-      'canvasContainer': {}
-    };
+    /* build project GeoJSON */
+    const { height, width } = canvasContainer.F1;
+    const cells = geometryContainer.cellGeometry;
+    const states = geometryContainer.stateGeometry;
+    const transitions = geometryContainer.transitionGeometry;
 
-    for (var key in canvasContainer.stages) {
+    const cellProps = propertyContainer.cellProperties;
+    const stateProps = propertyContainer.stateProperties
+    const transitionProps = propertyContainer.transitionProperties;
 
-      doc[id].canvasContainer[key] = {
-        width: canvasContainer.stages[key].stage.getAttr('width'),
-        height: canvasContainer.stages[key].stage.getAttr('height'),
-        floorplanDataURL: canvasContainer.stages[key].backgroundLayer.floorplanDataURL[0]
-      };
+    const polygons = getPolygons(cells, cellProps, height);
+    const points = getPoints(states, stateProps, height);
+    const lineStrings = getLineStrings(transitions, transitionProps, height);
 
+    function getPolygons(cells, cellProps, height) {
+      if (cells.length < 1) return [];
+      return cells.map((c, idx) => getPolygon(c, cellProps[idx].name, height));
+
+      function getPolygon(cell, name, height) {
+        return {
+          geometry: {
+            type: 'Polygon',
+            coordinates: [cell.points.map(p => [p.point.x, height - p.point.y])]
+          },
+          properties: { name },
+        };
+      }
+    }
+    function getPoints(states, stateProps, height) {
+      if (points.length < 1) return [];
+      return states.map((s, idx) => getPoint(s, stateProps[idx].name, height));
+
+      function getPoint(state, name, height) {
+        return {
+          geometry: {
+            type: 'Point',
+            coordinates: [state.point.point.x, height - state.point.point.y]
+          },
+          properties: { name },
+        }
+      }
+    }
+    function getLineStrings(transitions, transitionProps, height) {
+      if (transitions.length < 1) return [];
+      return transitions.map((t, idx) => getLineString(t, transitionProps[idx].name, height));
+
+      function getLineString(transition, name, height) {
+        return {
+          geometry: {
+            type: 'LineString',
+            coordinates: [
+              transition.points.map(p => [p.point.x, height - p.point.y])
+            ]
+          },
+          properties: { name },
+        }
+      }
     }
 
+    const projectGeoJSON = {
+      canvas: { height, width },
+      geo: { polygons, points, lineStrings }
+    };
+    
+    /* send project GeoJSON to iframe host */
     window.parent.postMessage(
       {
         sender: 'in-editor',
         type: 'project',
-        project: toGeoJSON(doc),
+        project: projectGeoJSON,
       },
       'http://localhost:4200'
     );
+    
+    var doc = projectGeoJSON;
+    // // Serialize document
+    // var id = propertyContainer.projectProperty.id;
+    // var doc = {};
+    // doc[id] = {
+    //   'geometryContainer': geometryContainer,
+    //   'propertyContainer': propertyContainer,
+    //   'dotPoolContainer': dotPoolContainer,
+    //   'canvasContainer': {}
+    // };
+
+    // for (var key in canvasContainer.stages) {
+
+    //   doc[id].canvasContainer[key] = {
+    //     width: canvasContainer.stages[key].stage.getAttr('width'),
+    //     height: canvasContainer.stages[key].stage.getAttr('height'),
+    //     floorplanDataURL: canvasContainer.stages[key].backgroundLayer.floorplanDataURL[0]
+    //   };
+
+    // }
 
     // doc['conditions'] = require('Conditions').getInstance();
     // doc['codeList'] = require('Property').CODE_LIST.getInstance().getList();
 
-    // var filename = doc.conditions.savePath + '/' + require('Conditions').getInstance().saveName
-    // filename += doc.conditions.saveWithTimeStamp ? '-' + new Date().getTime() : '';
-    // filename += '.json';
+    var filename = doc.conditions.savePath + '/' + require('Conditions').getInstance().saveName
+    filename += doc.conditions.saveWithTimeStamp ? '-' + new Date().getTime() : '';
+    filename += '.json';
 
-    // // send json data to viewer
-    // var xhr = new XMLHttpRequest();
-    // xhr.onreadystatechange = function () {
-    //   if (xhr.readyState === 4 && xhr.status == 200) {
-    //     require('Popup')('success', 'Project saved successfully', filename);
-    //   } else if (xhr.status == 500) {
-    //     require('Popup')('error', xhr.statusText, xhr.responseText);
-    //   }
-    // }
+    // send json data to viewer
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status == 200) {
+        require('Popup')('success', 'Project saved successfully', filename);
+      } else if (xhr.status == 500) {
+        require('Popup')('error', xhr.statusText, xhr.responseText);
+      }
+    }
 
-    // xhr.open("POST", "http://127.0.0.1:5757/save-project", true);
-    // xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    // xhr.send(JSON.stringify({
-    //   doc: doc,
-    //   path: filename
-    // }));
+    xhr.open("POST", "http://127.0.0.1:5757/save-project", true);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.send(JSON.stringify({
+      doc: doc,
+      path: filename
+    }));
 
   }
 
