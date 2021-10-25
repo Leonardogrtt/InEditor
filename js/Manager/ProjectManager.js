@@ -74,45 +74,48 @@ define(function (require) {
     function getPolygons(cells, cellProps, height) {
       if (cells.length < 1) return [];
       return cells.map((c, idx) => getPolygon(c, cellProps[idx].name, height));
-
-      function getPolygon(cell, name, height) {
-        return {
-          geometry: {
-            type: 'Polygon',
-            coordinates: [cell.points.map(p => [p.point.x, Number(height - p.point.y)])]
-          },
-          properties: { name },
-        };
-      }
     }
+
     function getPoints(states, stateProps, height) {
       if (states.length < 1) return [];
       return states.map((s, idx) => getPoint(s, stateProps[idx].name, height));
-
-      function getPoint(state, name, height) {
-        return {
-          geometry: {
-            type: 'Point',
-            coordinates: [state.point.point.x, Number(height - state.point.point.y)]
-          },
-          properties: { name },
-        }
-      }
     }
+
     function getLineStrings(transitions, transitionProps, height) {
       if (transitions.length < 1) return [];
       return transitions.map((t, idx) => getLineString(t, transitionProps[idx].name, height));
+    }
 
-      function getLineString(transition, name, height) {
-        return {
-          geometry: {
-            type: 'LineString',
-            coordinates: [transition.points.map(p => [p.point.x, Number(height - p.point.y)])]
-          },
-          properties: { name },
-        }
+    function getPolygon(cell, name, height) {
+      return {
+        geometry: {
+          type: 'Polygon',
+          coordinates: [cell.points.map(p => [p.point.x, Number(height - p.point.y)])]
+        },
+        properties: { name },
+      };
+    }
+
+    function getPoint(state, name, height) {
+      return {
+        geometry: {
+          type: 'Point',
+          coordinates: [state.point.point.x, Number(height - state.point.point.y)]
+        },
+        properties: { name },
       }
     }
+
+    function getLineString(transition, name, height) {
+      return {
+        geometry: {
+          type: 'LineString',
+          coordinates: [transition.points.map(p => [p.point.x, Number(height - p.point.y)])]
+        },
+        properties: { name },
+      }
+    }
+
 
     // // Serialize document
     // var id = propertyContainer.projectProperty.id;
