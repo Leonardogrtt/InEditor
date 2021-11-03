@@ -50,23 +50,21 @@ define(function (require) {
 
   var myhistory = require('History').getInstance();
 
-  window.addEventListener('message', function (e) {
+  window.addEventListener("message", function (e) {
     // Get the sent data
-    const { data } = e;
-    console.log('in-editor received message');
+    const messageObj = JSON.parse(e.data);
 
-    if (data.sender === 'host' && data.type === 'project') {
+    if (messageObj.sender === "host" && messageObj.type === "project") {
+      console.log(messageObj.project);
 
-      console.log('project: ');
-      console.log(data.project);
+      // now, load the project with project manager...
 
       // console.log(document.getElementById(data.target.id).files)
-
       // broker.publish(require('Message')('loadproject', {
       //   file: document.getElementById(data.target.id).files[0]
       // }));
-
       // document.getElementById(data.target.id).value = '';
     }
   });
+  
 });
