@@ -24,7 +24,7 @@
   <!-- Fancytree JS -->
   <script src="./lib/jquery-3.3.1.min.js"></script>
   <script src="./lib/jquery-ui.min.js"></script>
-  <script src="./lib/jquery.fancytree.min.js"></script>
+  <!-- <script src="./lib/jquery.fancytree.min.js"></script> -->
   <script src="./lib/jquery.fancytree-all.min.js"></script>
 
   <!-- Bootstrap JS -->
@@ -63,14 +63,14 @@
   <link type="text/css" rel="stylesheet" href="./css/excel-bootstrap-table-filter-style.css" />
 
   <!-- open layers -->
-  <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css">
+  <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css"
+    type="text/css">
   <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
-
 </head>
 
 <body>
   <header id="header"></header>
-  <div class="container-fluid"  id="content-body"></div>
+  <div class="container-fluid" id="content-body"></div>
 
 
   <div class="ui modal small" id="go-viewer-modal">
@@ -130,13 +130,14 @@
         <form class="row" id="factory-geometry-type-container">
           <div class="radio col-md-6 my-radio">
             <label class="form-check-label" title="CellSpace : Surface, CellSpaceBoundary : LineString">
-                    <input class="form-check-input" type="radio" name="optradio" id="factory-geometry-type-2D">Geomety 2D</label>
+              <input class="form-check-input" type="radio" name="optradio" id="factory-geometry-type-2D">Geomety
+              2D</label>
           </div>
           <div class="radio col-md-6 my-radio">
             <label class="form-check-label" title="CellSpace : Solid, CellSpaceBoundary : Surface">
-                    <input class="form-check-input" type="radio" name="optradio" id="factory-geometry-type-3D" checked>
-                    Geomety 3D
-                  </label>
+              <input class="form-check-input" type="radio" name="optradio" id="factory-geometry-type-3D" checked>
+              Geomety 3D
+            </label>
           </div>
         </form>
       </div>
@@ -159,32 +160,34 @@
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="factory-property-cell-name" checked>
               <label class="form-check-label" for="factory-property-cell-name">
-                          name
-                        </label>
+                name
+              </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="factory-property-cell-description" checked>
               <label class="form-check-label" for="factory-property-cell-description">
-                          description
-                        </label>
+                description
+              </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="factory-property-cell-partialboundedBy" checked>
+              <input class="form-check-input" type="checkbox" value="" id="factory-property-cell-partialboundedBy"
+                checked>
               <label class="form-check-label" for="factory-property-cell-partialboundedBy">
-                          partialboundedBy
-                        </label>
+                partialboundedBy
+              </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="factory-property-cell-externalReference" checked>
+              <input class="form-check-input" type="checkbox" value="" id="factory-property-cell-externalReference"
+                checked>
               <label class="form-check-label" for="factory-property-cell-externalReference">
-                          externalReference
-                        </label>
+                externalReference
+              </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="factory-property-cell-duality" checked>
               <label class="form-check-label" for="factory-property-cell-duality">
-                          duality
-                        </label>
+                duality
+              </label>
             </div>
           </div>
 
@@ -194,32 +197,36 @@
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="factory-property-cellbondary-name" checked>
               <label class="form-check-label" for="factory-property-cellbondary-name">
-                        name
-                      </label>
+                name
+              </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="factory-property-cellbondary-description" checked>
+              <input class="form-check-input" type="checkbox" value="" id="factory-property-cellbondary-description"
+                checked>
               <label class="form-check-label" for="factory-property-cellbondary-description">
-                        description
-                      </label>
+                description
+              </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="factory-property-cellbondary-partialboundedBy" checked>
+              <input class="form-check-input" type="checkbox" value=""
+                id="factory-property-cellbondary-partialboundedBy" checked>
               <label class="form-check-label" for="factory-property-cellbondary-partialboundedBy">
-                        partialboundedBy
-                      </label>
+                partialboundedBy
+              </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="factory-property-cellbondary-externalReference" checked>
+              <input class="form-check-input" type="checkbox" value=""
+                id="factory-property-cellbondary-externalReference" checked>
               <label class="form-check-label" for="factory-property-cellbondary-externalReference">
-                        externalReference
-                      </label>
+                externalReference
+              </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="factory-property-cellbondary-duality" checked>
+              <input class="form-check-input" type="checkbox" value="" id="factory-property-cellbondary-duality"
+                checked>
               <label class="form-check-label" for="factory-property-cellbondary-duality">
-                        duality
-                      </label>
+                duality
+              </label>
             </div>
           </div>
 
@@ -232,26 +239,26 @@
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="factory-property-state-name" checked>
               <label class="form-check-label" for="factory-property-state-name">
-                            name
-                          </label>
+                name
+              </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="factory-property-state-description" checked>
               <label class="form-check-label" for="factory-property-state-description">
-                            description
-                          </label>
+                description
+              </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="factory-property-state-duality" checked>
               <label class="form-check-label" for="factory-property-state-duality">
-                            duality
-                          </label>
+                duality
+              </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="factory-property-state-connects" checked>
               <label class="form-check-label" for="factory-property-state-connects">
-                            connects
-                          </label>
+                connects
+              </label>
             </div>
           </div>
 
@@ -264,22 +271,23 @@
               <label class="form-check-label" for="factory-property-transition-name">name</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="factory-property-transition-description" checked>
+              <input class="form-check-input" type="checkbox" value="" id="factory-property-transition-description"
+                checked>
               <label class="form-check-label" for="factory-property-transition-description">
-                              description
-                            </label>
+                description
+              </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="factory-property-transition-duality" checked>
               <label class="form-check-label" for="factory-property-transition-duality">
-                              duality
-                    </label>
+                duality
+              </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="factory-property-transition-weight" checked>
               <label class="form-check-label" for="factory-property-transition-weight">
-                              weight
-                    </label>
+                weight
+              </label>
             </div>
           </div>
 
@@ -328,21 +336,24 @@
           <div class="col-1" style="float: left;"></div>
           <div class="col-4" style="float: left;">CellSpaceBoundary</div>
           <div class="col-6">
-            <input type="text" style="padding:1; font-size: 11px" class="form-control" id="setting-conditions-pre-cellBoundary">
+            <input type="text" style="padding:1; font-size: 11px" class="form-control"
+              id="setting-conditions-pre-cellBoundary">
           </div>
         </div>
         <div class="row" style="margin-bottom:2px">
           <div class="col-1" style="float: left;"></div>
           <div class="col-4" style="float: left;">State</div>
           <div class="col-6">
-            <input type="text" style="padding:1; font-size: 11px" class="form-control" id="setting-conditions-pre-state">
+            <input type="text" style="padding:1; font-size: 11px" class="form-control"
+              id="setting-conditions-pre-state">
           </div>
         </div>
         <div class="row" style="margin-bottom:2px">
           <div class="col-1" style="float: left;"></div>
           <div class="col-4" style="float: left;">Transition</div>
           <div class="col-6">
-            <input type="text" style="padding:1; font-size: 11px" class="form-control" id="setting-conditions-pre-transition">
+            <input type="text" style="padding:1; font-size: 11px" class="form-control"
+              id="setting-conditions-pre-transition">
           </div>
         </div>
       </div>
@@ -356,14 +367,16 @@
         <div class="col-1" style="float: left;"></div>
         <div class="col-4" style="float: left;">Aspect ratio</div>
         <div class="col-6">
-          <input type="text" style="padding:1; font-size: 11px" class="form-control" id="setting-conditions-aspect-ratio">
+          <input type="text" style="padding:1; font-size: 11px" class="form-control"
+            id="setting-conditions-aspect-ratio">
         </div>
       </div>
       <div class="row" style="margin-bottom:2px">
         <div class="col-1" style="float: left;"></div>
         <div class="col-4" style="float: left;">Scale Factor</div>
         <div class="col-6">
-          <input type="text" style="padding:1; font-size: 11px" class="form-control" id="setting-conditions-scale-factor">
+          <input type="text" style="padding:1; font-size: 11px" class="form-control"
+            id="setting-conditions-scale-factor">
         </div>
       </div>
       <div class="row" style="margin-bottom:2px">
@@ -419,21 +432,24 @@
           <input type="text" style="padding:1; font-size: 11px" class="form-control" id="setting-desc-modal-newDesc">
         </div>
         <div class="col-1" style="padding:0;">
-          <button type="text" style="padding:1; font-size: 11px" class="form-control" id="setting-conditions-submit-btn">+</button>
+          <button type="text" style="padding:1; font-size: 11px" class="form-control"
+            id="setting-conditions-submit-btn">+</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="modal fade" id="project-import-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal fade" id="project-import-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
 
         <div class="modal-header">
           <h5 class="modal-title">Import External File</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="project-import-modal-close-btn">
-          <span aria-hidden="true">&times;</span>
-        </button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            id="project-import-modal-close-btn">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
 
         <div class="modal-body">
@@ -441,23 +457,26 @@
           <div id="project-import-modal-option">
             <h6>File</h6>
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="project-import-file" accept=".gml, .geojson" onChange={$( '#project-import-file-label').html(event.target.files[0].name);}>
+              <input type="file" class="custom-file-input" id="project-import-file" accept=".gml, .geojson"
+                onChange={handleProjectImportFileChange}>
               <label class="custom-file-label" for="customFile" id="project-import-file-label"></label>
-            </div><br/><br/>
+            </div><br /><br />
 
             <h6>Import on ... </h6>
             <form>
               <div class="form-check form-check-inline">
-                <input class="form-check-input disabled" type="radio" id="project-import-option-new-project" value="new-project" disabled>
+                <input class="form-check-input disabled" type="radio" id="project-import-option-new-project"
+                  value="new-project" disabled>
                 <label class="form-check-label" for="project-import-option-new-project">
-                New Project
-              </label>
+                  New Project
+                </label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="project-import-option-floor" value="floor" checked>
+                <input class="form-check-input" type="radio" name="exampleRadios" id="project-import-option-floor"
+                  value="floor" checked>
                 <label class="form-check-label" for="project-import-option-floor">
-                This Floor
-              </label>
+                  This Floor
+                </label>
               </div>
             </form>
 
@@ -469,21 +488,28 @@
 
             <form>
               <div class="form-check disabled row">
-                <input class="form-check-input disabled col-1" type="radio" id="project-import-option-boundingbox" value="boundingbox" disabled>
-                <label class="form-check-label col-3" for="project-import-option-boundingbox" style="float: left;">Bounding Box</label>
-              </div><br/>
+                <input class="form-check-input disabled col-1" type="radio" id="project-import-option-boundingbox"
+                  value="boundingbox" disabled>
+                <label class="form-check-label col-3" for="project-import-option-boundingbox"
+                  style="float: left;">Bounding Box</label>
+              </div><br />
               <div class="form-check row">
-                <input class="form-check-input col-1" type="radio" name="exampleRadios" id="project-import-option-center" value="center" checked>
-                <label class="form-check-label col-3" for="project-import-option-center" style="float: left;">Center</label>
+                <input class="form-check-input col-1" type="radio" name="exampleRadios"
+                  id="project-import-option-center" value="center" checked>
+                <label class="form-check-label col-3" for="project-import-option-center"
+                  style="float: left;">Center</label>
                 <div class="col-8 row">
                   <div class="col-4" style="padding:0;">
-                    <input type="number" style="padding:1; font-size: 9px" class="form-control" placeholder="x" id="project-import-option-center-x">
+                    <input type="number" style="padding:1; font-size: 9px" class="form-control" placeholder="x"
+                      id="project-import-option-center-x">
                   </div>
                   <div class="col-4" style="padding:0">
-                    <input type="number" style="padding:1; font-size: 9px" class="form-control" placeholder="y" id="project-import-option-center-y">
+                    <input type="number" style="padding:1; font-size: 9px" class="form-control" placeholder="y"
+                      id="project-import-option-center-y">
                   </div>
                   <div class="col-4" style="padding:0">
-                    <input type="number" style="padding:1; font-size: 9px" class="form-control" placeholder="rotation" id="project-import-option-center-rotation">
+                    <input type="number" style="padding:1; font-size: 9px" class="form-control" placeholder="rotation"
+                      id="project-import-option-center-rotation">
                   </div>
                 </div>
               </div>
@@ -493,13 +519,15 @@
 
             <form>
               <div>
-                <label class="form-check-label col-3" for="significant-figures" style="float: left;">significant-figures</label>
+                <label class="form-check-label col-3" for="significant-figures"
+                  style="float: left;">significant-figures</label>
                 <div class="col-8 row">
-                  <input type="number" style="padding:1; font-size: 9px" class="form-control" placeholder="x" id="project-import-option-significant-figures">
+                  <input type="number" style="padding:1; font-size: 9px" class="form-control" placeholder="x"
+                    id="project-import-option-significant-figures">
                 </div>
               </div>
             </form>
-            <br/>
+            <br />
 
 
 
@@ -546,14 +574,15 @@
   </div>
 
 
-  <div id="context-menu" style="display: none;position: absolute;left: 100;bottom: 100;width: 10rem;height: 10rem;z-index: 1050px;background-color: white;">
+  <div id="context-menu"
+    style="display: none;position: absolute;left: 100;bottom: 100;width: 10rem;height: 10rem;z-index: 1050px;background-color: white;">
     <ul class="dropdown-menu" role="menu">
     </ul>
   </div>
 
   <div class="ui longer modal" id="setting-code-modal">
     <div class="header">
-      <i class="close icon" onClick={$('#setting-code-modal').modal('hide')}></i>
+      <i class="close icon" onClick={handleSettingCodeModalClick}></i>
       Code List
     </div>
 
@@ -596,11 +625,13 @@
         </div>
       </div>
       <div class="ui grid">
-        <div class="four wide column">Upload Code List File<br/>(.csv, .json)</div>
+        <div class="four wide column">Upload Code List File<br />(.csv, .json)</div>
         <div class="ten wide column middle aligned">
           <div>
-            <input type="file" class="custom-file-input" id="setting-code-upload-file" accept=".csv, .json" onChange={$('#setting-code-upload-file-label').html(event.target.files[0].name);}>
-            <label class="custom-file-label" for="customFile" style="top:1rem" id="setting-code-upload-file-label"></label>
+            <input type="file" class="custom-file-input" id="setting-code-upload-file" accept=".csv, .json"
+              onChange={handleSettingCodeUploadFileLabelChange}>
+            <label class="custom-file-label" for="customFile" style="top:1rem"
+              id="setting-code-upload-file-label"></label>
           </div>
         </div>
         <div class="one right floated column middle aligned">
@@ -620,6 +651,16 @@
 
   <script>
     $('.ui.dropdown').dropdown();
+
+    function handleProjectImportFileChange(e) {
+      $('#project-import-file-label').html(e.target.files[0].name);
+    }
+    function handleSettingCodeModalClick(e) {
+      $('#setting-code-modal').modal('hide');
+    }
+    function handleSettingCodeUploadFileLabelChange(e) {
+      $('#setting-code-upload-file-label').html(e.target.files[0].name);
+    }
   </script>
 
   <script data-main="js/main" src="lib/require.js"></script>
